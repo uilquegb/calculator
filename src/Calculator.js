@@ -13,10 +13,20 @@ const inputButtons = [
 
 class Calculator extends Component {
 
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            inputValue: 0
+        };
+    }
+
     render() {
         return (
             <View style={Style.rootContainer}>
-                <View style={Style.displayContainer}></View>
+                <View style={Style.displayContainer}>
+                    <Text style={Style.displayText}>{this.state.inputValue}</Text>
+                </View>
                 <View style={Style.inputContainer}>
                     {this._renderInputButtons()}
                 </View>
@@ -49,7 +59,18 @@ class Calculator extends Component {
     }
 
     _onInputButtonPressed(input) {
-        alert(input);
+        switch (typeof (input)) {
+            case 'number':
+                return this._handleNumberInput(input);
+        }
+    }
+
+    _handleNumberInput(num) {
+        let inputValue = (this.state.inputValue * 10) + num;
+
+        this.setState({
+            inputValue: inputValue
+        });
     }
 }
 
